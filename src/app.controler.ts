@@ -17,7 +17,7 @@ export class AppController {
   @UseGuards(AuthGuard('local'))
   @Post('auth/login')
 
-  @ApiOkResponse({description: 'result Token'})
+  @ApiCreatedResponse({description: 'result Token'})
   @ApiForbiddenResponse({description: 'Forbidden.'})
   @ApiUnauthorizedResponse({description: 'User doesn\'t exist or Wrong credentials.'})
   async login(
@@ -25,11 +25,11 @@ export class AppController {
     return this.authService.login(req.user['_doc']);
   }
  
-  @ApiOkResponse({description: 'Always return statusCode: 200'})
+  @ApiCreatedResponse({description: 'Always return statusCode: 201'})
   @Post('auth/logout')
   async logout(@Request() req) {
     return {
-      statusCode: 200
+      statusCode: 201
     }
   }
 
