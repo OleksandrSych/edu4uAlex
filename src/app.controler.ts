@@ -5,11 +5,12 @@ import { AuthService } from './auth/auth.service';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { ApiTags,ApiUnauthorizedResponse, ApiBody, ApiHeader, ApiOkResponse, ApiForbiddenResponse, ApiBasicAuth,ApiParamOptions, ApiParam , ApiHeaderOptions, ApiBearerAuth} from '@nestjs/swagger';
 import { UserLoginDTO } from './users/dto/userilogin.dto';
+import { UsersService } from './users/users.service';
 
 @ApiTags('Login and Logout')
 @Controller()
 export class AppController {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,private usersService: UsersService) {}
 
 
  
@@ -38,6 +39,6 @@ export class AppController {
   @ApiOkResponse({description: 'Return user profile'})
   @ApiUnauthorizedResponse({description: 'User Unauthorized'})
   getProfile(@Request() req) {
-    return req.user;
+    return this.usersService.getUser(req.user._id);
   }
 }
