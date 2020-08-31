@@ -21,7 +21,7 @@ export class AppController {
   @ApiUnauthorizedResponse({description: 'User doesn\'t exist or Wrong credentials.'})
   async login(
     @Request() req, @Body() userLoginDto: UserLoginDTO) {
-    return this.authService.login(userLoginDto);
+    return this.authService.login(req.user['_doc']);
   }
  
   @ApiOkResponse({description: 'Always return statusCode: 200'})
