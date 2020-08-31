@@ -3,7 +3,7 @@ import { Controller, Request, Post, UseGuards, Get, Body } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth/auth.service';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
-import { ApiTags,ApiUnauthorizedResponse, ApiBody, ApiHeader, ApiOkResponse, ApiForbiddenResponse, ApiBasicAuth,ApiParamOptions, ApiParam , ApiHeaderOptions, ApiBearerAuth} from '@nestjs/swagger';
+import { ApiTags,ApiUnauthorizedResponse, ApiBody, ApiHeader, ApiCreatedResponse, ApiOkResponse, ApiForbiddenResponse, ApiBasicAuth,ApiParamOptions, ApiParam , ApiHeaderOptions, ApiBearerAuth} from '@nestjs/swagger';
 import { UserLoginDTO } from './users/dto/userilogin.dto';
 import { UsersService } from './users/users.service';
 
