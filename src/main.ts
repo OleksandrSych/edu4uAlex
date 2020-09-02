@@ -11,7 +11,7 @@ async function bootstrap() {
   .setTitle('EDU4U API')
   .setDescription('The EDU4U API description')
   .setVersion('1.0')
-  .addTag('EDU4U') 
+  .addTag('EDU4U test') 
   .addBearerAuth()
   .build();
   
