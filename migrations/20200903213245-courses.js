@@ -1,20 +1,19 @@
 const createCollection = async (db) => {
-  await db.createCollection('users', 
-  // {
-  //   validator: UserSchema,
+  await db.createCollection('courses',
+  //  {
+  //   validator: CourseSchema,
   //   validationAction: 'error',
   //   validationLevel: 'strict',
   // }
   )
-
 }
  
 module.exports = {
   async up(db) {
     try {
-      const col = await db.listCollections({ name: 'users' }).toArray()
+      const col = await db.listCollections({ name: 'courses' }).toArray()
       if(col.length > 0) {
-        throw new Error('Collection users already exists in MongoDb. Exited...')
+        throw new Error('Collection courses already exists in MongoDb. Exited...')
       } else {
          await createCollection(db); 
       }
@@ -25,7 +24,7 @@ module.exports = {
  
   async down(db) {
     try {  
-      await (  db.getCollection('users')).drop();
+      await (  db.getCollection('courses')).drop();
     } catch(err) {
       throw err
     }

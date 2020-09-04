@@ -5,16 +5,19 @@ import { UsersModule } from './users/users.module';
 import { UsersController} from './users/users.controller';
 import { AppController } from './app.controler';
 import { MongooseModule } from '@nestjs/mongoose'; 
+import { UniversitiesModule } from './universities/universities.module';
+import { CoursesModule } from './courses/courses.module';
  
-//let url = `mongodb://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${parseInt(process.env.DB_PORT)}/${process.env.DB_DATABASE_NAME}`;
-let url = "mongodb+srv://alex:admin@cluster0.jczgn.mongodb.net/edu4u?retryWrites=true&w=majority";
-
+let url =  process.env.DB_URI || "mongodb+srv://alex:admin@cluster0.jczgn.mongodb.net/edu4u?retryWrites=true&w=majority";
+console.log(url);
 @Module({
   imports: [
    // DatabaseModule,
     AuthModule,
     UsersModule,
     MongooseModule.forRoot(url),
+    UniversitiesModule,
+    CoursesModule,
   ],
   controllers: [
     AppController,

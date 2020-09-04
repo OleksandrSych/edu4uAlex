@@ -9,4 +9,5 @@ export interface User extends Document {
     readonly contactPhone: string;
     readonly title: string;
     readonly interests: string;
+    readonly role: string;
 }

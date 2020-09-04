@@ -3,8 +3,9 @@ require('dotenv').config();
 
 const config = {
   mongodb: { 
-    url: `mongodb://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${parseInt(process.env.DB_PORT)}`,
-    databaseName: `${process.env.DB_DATABASE_NAME}`,
+    url:   "mongodb+srv://alex:admin@cluster0.jczgn.mongodb.net/edu4u?retryWrites=true&w=majority",
+    databaseName:  "edu4u",
+ 
     options: {
       useNewUrlParser: true,
       useUnifiedTopology: true,  

@@ -1,18 +1,18 @@
+
 import { Controller, Get, Res, HttpStatus, Param, NotFoundException, Post, Body, Put, Query, Delete ,UseGuards, ForbiddenException} from '@nestjs/common';
 import { UsersService } from './users.service';
-import { User } from './user.entity';
 import { CreateUserDTO } from './dto/create-user.dto';
-import { ValidateObjectId } from './pipes/validate-object-id.pipes';
+import { ValidateObjectId } from '../pipes/validate-object-id.pipes';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { ApiTags, ApiResponse, ApiHeader, ApiOkResponse, ApiForbiddenResponse, ApiBearerAuth, ApiParam, ApiBody, ApiQuery, ApiNotFoundResponse, ApiBadRequestResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOkResponse, ApiForbiddenResponse, ApiBearerAuth, ApiParam, ApiQuery, ApiNotFoundResponse, ApiBadRequestResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { ObjectID } from 'mongodb';
 
 
+@UseGuards(JwtAuthGuard)
+@Controller('users')
 @ApiTags('Users')
 @ApiBearerAuth()
 @ApiUnauthorizedResponse({description:'Access Token is not valid or has expired'})
-@UseGuards(JwtAuthGuard)
-@Controller('users')
 export class UsersController{
     constructor(private usersService: UsersService) { }  
     // Fetch all users
@@ -41,21 +41,13 @@ export class UsersController{
     @Post('/add')
     @ApiForbiddenResponse({description:'User with this email already exists'})
     async addUser(@Res() res, @Body() createUserDTO: CreateUserDTO) {
-      await this.checkEmail(createUserDTO.email); 
+      await this.usersService.checkEmail(createUserDTO.email); 
       const newUser = await this.usersService.addUser(createUserDTO);
       return res.status(HttpStatus.OK).json({
         message: 'User has been submitted successfully!',
         user: newUser,
       });
-    }
-  
-  
-  private async checkEmail(email: string) {
-    const user = await this.usersService.findOne(email);
-    if (user) {
-      throw new ForbiddenException('User with this email already exists');
-    }
-  }
+    }   
 
     @Put('/edit')
     @ApiQuery({ name: 'userID', type: String })
@@ -70,7 +62,7 @@ export class UsersController{
       }
       const user = await this.usersService.getUser(new ObjectID(userID));
       if (user && user.email !=  createUserDTO.email) {
-        await this.checkEmail(createUserDTO.email);
+        await this.usersService.checkEmail(createUserDTO.email);
       }
       const editedUser = await this.usersService.editUser(userID, createUserDTO);
       if (!editedUser) {

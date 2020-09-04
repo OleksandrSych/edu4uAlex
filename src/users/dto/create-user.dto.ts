@@ -30,4 +30,8 @@ export class CreateUserDTO {
         required: false        
     })
     readonly interests: string;
+    @ApiProperty({description: 'User Role',
+        required: false        
+    })
+    readonly role: string;
 }

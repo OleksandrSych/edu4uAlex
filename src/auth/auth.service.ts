@@ -9,7 +9,7 @@ export class AuthService {
   constructor(private usersService: UsersService, private jwtService: JwtService) {}
 
   async validateUser(email: string, pass: string): Promise<any> {
-    const user = await this.usersService.findOne(email);
+    const user = await this.usersService.findUserByEmail(email);
     if (!user) {
       return { message: "User doesn't exist", payload: null };
     } 

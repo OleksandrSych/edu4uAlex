@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, ForbiddenException } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './interfaces/user.interface';
@@ -19,7 +19,7 @@ export class UsersService {
       .exec(); 
     return user;
   }
-  async findOne(email: string): Promise<User | undefined> { 
+  async findUserByEmail(email: string): Promise<User | undefined> { 
     const user = await this.userModel.findOne({"email" : email}).exec(); 
     return user;
   }
@@ -37,5 +37,11 @@ export class UsersService {
     const deletedUser = await this.userModel
       .findByIdAndRemove(id);
     return deletedUser;
+  }
+  async checkEmail(email: string) {
+    const user = await this.findUserByEmail(email);
+    if (user) {
+      throw new ForbiddenException('User with this email already exists');
+    }
   }
 }  

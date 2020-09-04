@@ -1,4 +1,3 @@
-
 import * as mongoose from 'mongoose';
 
 export const UserSchema = new mongoose.Schema({
@@ -10,4 +9,5 @@ export const UserSchema = new mongoose.Schema({
     contactPhone: String,
     title: String,
     interests: String,
+    role: String,
 });
