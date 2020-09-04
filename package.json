@@ -28,6 +28,7 @@
   "dependencies": {
     "ts-node": "^8.6.2",
     "@types/node": "^13.9.1",
+    "@nestjs/cli": "^7.0.0",
     "@nestjs/common": "^7.0.0",
     "@nestjs/core": "^7.0.0",
     "@nestjs/jwt": "^7.1.0",
