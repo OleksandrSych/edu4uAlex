@@ -10,10 +10,10 @@ export class UniversitiesService {
 
     constructor(@InjectModel('Department') private readonly departmentModel: Model<Department>) { }
     async getDepartments(id) : Promise<Department[]> {
-        const users = await this.departmentModel
+        const departments = await this.departmentModel
             .find({"parentDepartment" : id})
             .exec();
-        return users;
+        return departments;
     }
     async getDepartment(id): Promise<Department> { 
         const department = await this.departmentModel
@@ -27,13 +27,13 @@ export class UniversitiesService {
         return newDepartment.save();
     }
     async editDepartment(id: any, createDepartmentDTO: CreateDepartmentDTO) : Promise<Department> {
-        const editedUser = await this.departmentModel
+        const editedDepartment = await this.departmentModel
             .findByIdAndUpdate(id, createDepartmentDTO, { new: true });
-        return editedUser;
+        return editedDepartment;
     }
     async deleteDepartment(id): Promise<any> {
-        const deletedUser = await this.departmentModel
+        const deletedDepartment = await this.departmentModel
             .findByIdAndRemove(id);
-        return deletedUser;
+        return deletedDepartment;
     }
 }

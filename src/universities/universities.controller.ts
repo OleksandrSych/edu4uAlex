@@ -18,7 +18,7 @@ export class UniversitiesController {
     @Get('/universities')
     @ApiOkResponse({description:'The universities list has been successfully returned.'})
     @ApiForbiddenResponse({description:'Forbidden.'})
-    async getUsers(@Res() res) {
+    async getDepartments(@Res() res) {
       const Universities = await this.universitiesService.getDepartments("");
       return res.status(HttpStatus.OK).json(Universities);
     }
@@ -29,7 +29,7 @@ export class UniversitiesController {
     @ApiNotFoundResponse({description:'Department does not exist.'})
     @ApiBadRequestResponse({description:'Invalid id!'})
     @ApiParam({ name: 'id', type: String })
-    async getUser(@Res() res, @Param('id', new ValidateObjectId()) id) {
+    async getDepartment(@Res() res, @Param('id', new ValidateObjectId()) id) {
       const department = await this.universitiesService.getDepartment(new ObjectID(id));
       if (!id) {
           throw new NotFoundException('Department does not exist!');
@@ -43,25 +43,24 @@ export class UniversitiesController {
     @ApiNotFoundResponse({description:'Department does not exist.'})
     @ApiBadRequestResponse({description:'Invalid id!'})
     @ApiParam({ name: 'id', type: String })
-    async getDepartments(@Res() res, @Param('id', new ValidateObjectId()) id) {
+    async getDepartmentsPatentID(@Res() res, @Param('id', new ValidateObjectId()) id) {
         const departments = await this.universitiesService.getDepartments(id);
         return res.status(HttpStatus.OK).json(departments);
     }
 
     // Submit a department
     @Post('/add') 
-    async addUser(@Res() res, @Body() createDepartmentDTO: CreateDepartmentDTO) { 
+    async addDepartment(@Res() res, @Body() createDepartmentDTO: CreateDepartmentDTO) { 
       const newDepartment = await this.universitiesService.addDepartment(createDepartmentDTO);
       return res.status(HttpStatus.OK).json({
         message: 'Department has been submitted successfully!',
-        user: newDepartment,
+        department: newDepartment,
       });
     }   
 
     @Put('/edit')
-    @ApiQuery({ name: 'id', type: String })
-    @ApiForbiddenResponse({description:'User with this new email already exists'})
-    async editUser(
+    @ApiQuery({ name: 'id', type: String }) 
+    async editDepartment(
       @Res() res,
       @Query('id', new ValidateObjectId()) id,
       @Body() createDepartmentDTO: CreateDepartmentDTO,
@@ -75,7 +74,7 @@ export class UniversitiesController {
       }
       return res.status(HttpStatus.OK).json({
         message: 'Department has been successfully updated',
-        user: editedDepartment,
+        department: editedDepartment,
       });
     }
     // Delete a department using ID
@@ -88,8 +87,8 @@ export class UniversitiesController {
           throw new NotFoundException('Department does not exist!');
       }
       return res.status(HttpStatus.OK).json({
-        message: 'UDepartmentser has been deleted!',
-        user: deletedDepartment,
+        message: 'Departmentser has been deleted!',
+        department: deletedDepartment,
       });
     }
   }
